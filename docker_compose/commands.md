@@ -1,0 +1,2 @@
+- `docker compose up -d` - старт проекта Docker Compose в фоновом режиме
+- `docker compose down` - выключение проекта Docker Compose
