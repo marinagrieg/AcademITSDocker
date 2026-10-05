@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:16
-    restart: on-failure
+    restart: unless-stopped
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -10,16 +10,15 @@ services:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
-      interval: 10s
+      interval: 2s
       timeout: 5s
       retries: 5
-      start_period: 10s
-      
+
   app:
     build:
-      context: .
+      context: ./app
       dockerfile: Dockerfile
-    restart: on-failure
+    restart: unless-stopped
     environment:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
